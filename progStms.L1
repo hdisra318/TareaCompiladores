@@ -1,0 +1,24 @@
+L1PROG Pstms
+VAR
+    x: [0..3];
+PROG
+    {x1:=(x1 + 1);
+    Read x1;
+    Write x1;
+    IF x1 <= 2
+        Then
+            {x1:=0;
+             x1:=1;
+             x1:=2;
+             x1:=3;}
+        Else
+            {x1:=3;
+            x1:=2;};
+    While ((¬ x1 <= 2 & (x1 <= 2 | ¬ x1 <= 2)) -> ¬ x1 <= 2) Do
+        x1:=3;
+    While (¬ x1 <= 2 & (x1 <= 2 | ¬ x1 <= 2)) Do
+        {
+        x1:=3;
+        x1:=2;};
+    Halt;
+    }

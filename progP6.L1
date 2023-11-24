@@ -1,0 +1,6 @@
+L1PROG P6
+VAR
+    x: [0..3];
+PROG
+    For x = 1 To 3 Do
+        x:=(x + 1)

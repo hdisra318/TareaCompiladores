@@ -69,6 +69,26 @@ semWhile expBool stm sigma
         sigmaL' = semStm stm sigma
 --
 
+-- FOR
+semFor :: VarId -> ExpArith -> ExpArith -> Stm -> EstadoVT -> [EstadoVT]
+semFor vId e1 e2 stm sigma
+    = if ebSem
+        then nub $ concat [semFor vId e1 e2 stm edo | edo <- sigmaL']
+        else [sigma]
+    where
+        ebSem = semExpBool (EBatom (AtomoBool (EBvar vId, OCmenEq, obtenerExpBasica e2))) sigma
+        -- aux1 = semExpArith e2
+        -- aux2 = semVar vId sigma
+        -- ebSem = aux1 == aux2
+        sigmaL' = semStm stm sigma
+
+
+obtenerExpBasica :: ExpArith -> ExpBasica
+obtenerExpBasica (EAbasica expBasica) = expBasica
+obtenerExpBasica (EAopArit _) = error "No es una ExpBasica"
+------
+-- semAtomoBool (AtomoBool (e2, OCequ, (semVar vId sigma))) sigma
+
 -- semStmList :: StmList -> EstadoVT -> [EstadoVT]
 -- -- Semántica de una lista de instrucciones ls en el estado sigma.
 -- semStmList (StmList ls) sigma
@@ -108,6 +128,7 @@ semStm stm sigma
         SIfThen eBool stm1 stm2 -> semIfThen eBool stm1 stm2 sigma
         SWhile eBoolW stmW      -> semWhile eBoolW stmW sigma
         SblockStm stmL          -> semBlockStm stmL sigma
+        SFor vId e1 e2 stmF     -> semFor vId e1 e2 stmF sigma
 --
 
 

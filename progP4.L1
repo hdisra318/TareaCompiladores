@@ -1,0 +1,6 @@
+L1PROG P4
+VAR
+    x: [0..3];
+PROG
+    While x <= 2 Do
+        x:=(x + 1)

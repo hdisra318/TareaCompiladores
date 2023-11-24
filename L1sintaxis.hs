@@ -190,7 +190,12 @@ data OpBoolBin = OpBor | OpBand | OpBimp
 --                  | Read <VarId> | Write <VarId>
 --                  | <IfThenStm> | <WhileStm>
 --                  | <BlockStm>
---
+--                  | <ForStm>
+
+-- <ForStm>   ::= For <VarId> = <ExpArith> To <ExpArith> Do <Stm>
+-- <ProgL2>     ::= L2PROG <ProgName> VAR <VarList> PROG <Stm>
+
+-- <WhileStm>   ::= While <ExpBool> Do <Stm>
 data Stm
     = Sasig VarId ExpArith
     | Shalt
@@ -199,6 +204,7 @@ data Stm
     | SIfThen ExpBool Stm Stm
     | SWhile ExpBool Stm
     | SblockStm [Stm]
+    | SFor VarId  ExpArith  ExpArith  Stm
 --     deriving (Eq, Show)
    deriving (Eq)
 --
@@ -313,6 +319,7 @@ showStm stm =
                                 ++ " Else " ++ (show s2)
         (SWhile eB stmW)    -> "While " ++ (show eB) ++ " Do " ++ (show stmW)
         (SblockStm stmL)    -> "{" ++ (show stmL) ++ "}"
+        (SFor vId e1 e2 stmF) -> "For " ++ vId ++ "=" ++ (show e1) ++ " To " ++ (show e2) ++ " Do " ++ (show stmF)
 --
 instance Show (Stm) where
     show = showStm

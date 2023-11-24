@@ -1,0 +1,21 @@
+sesion-Haskell-viernes10Nov.txt
+
+mcb@RCA:~$ cd /home/mcb/Compiladores/Haskell/L1
+mcb@RCA:~/Compiladores/Haskell/L1$ ghci
+GHCi, version 9.0.2: https://www.haskell.org/ghc/  :? for help
+ghci>
+ghci> :l L1parserStm.hs
+[1 of 6] Compiling HuttonParsing    ( HuttonParsing.hs, interpreted )
+[2 of 6] Compiling L1sintaxis       ( L1sintaxis.hs, interpreted )
+[3 of 6] Compiling L1parserVar      ( L1parserVar.hs, interpreted )
+[4 of 6] Compiling L1parserExpArith ( L1parserExpArith.hs, interpreted )
+[5 of 6] Compiling L1parserExpBool  ( L1parserExpBool.hs, interpreted )
+[6 of 6] Compiling L1parserStm      ( L1parserStm.hs, interpreted )
+Ok, six modules loaded.
+ghci>
+ghci> :t parserStmList
+parserStmList :: Parser [Stm]
+ghci>
+ghci> -- Probar el parser de programas L1 con un programa L1.
+ghci>
+ghci>

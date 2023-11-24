@@ -1,0 +1,29 @@
+
+...el parser para For:
+-- <ForStm>   ::= For <VarId> = <ExpArith> To <ExpArith> Do <Stm>
+-- ... SFor  VarId  ExpArith  ExpArith  Stm
+tokenFor :: Parser String
+tokenFor = symbol "For"
+--
+tokenEq :: Parser String
+tokenEq = symbol "="
+--
+tokenTo :: Parser String
+tokenTo = symbol "To"
+--
+tokenDo :: Parser String
+tokenDo = symbol "Do"
+--
+parserFor :: Parser Stm
+parserFor =
+    do
+    _       <- tokenFor
+    vId     <- tokenVarId -- Definido en L1parserVar.hs
+    _       <- tokenEq
+    expArit1 <- parserExpArith --definido en L1parserExpArith.hs
+    _       <- tokenTo
+    expArit2 <- parserExpArith --definido en L1parserExpArith.hs
+    _       <- tokenDo
+    stm     <- parserStm
+    return (SFor  vId  expArit1 expArit2 stm)
+--

@@ -1,0 +1,404 @@
+
+sesion definicion del parser para asignacion en L1parserStm.hs
+sesion-parser-Asignacion-L1.txt
+----------------------------------
+mcb2@latitude5511-b:~$ cd /home/mcb2/Documents/Cursos/Cursos-FC/CursosFC-2024-1/Cmp-2024-1/Haskell/L1/
+mcb2@latitude5511-b:~/.../L1$
+mcb2@latitude5511-b:~/.../L1$
+mcb2@latitude5511-b:~/.../L1$ ghci
+GHCi, version 8.8.4: https://www.haskell.org/ghc/  :? for help
+Prelude>
+Prelude> :l L1tests.hs
+[ 1 of 11] Compiling HuttonParsing    ( HuttonParsing.hs, interpreted )
+[ 2 of 11] Compiling L1global         ( L1global.hs, interpreted )
+[ 3 of 11] Compiling L1sintaxis       ( L1sintaxis.hs, interpreted )
+[ 4 of 11] Compiling L1parserVar      ( L1parserVar.hs, interpreted )
+[ 5 of 11] Compiling L1parserExpArith ( L1parserExpArith.hs, interpreted )
+[ 6 of 11] Compiling L1estados        ( L1estados.hs, interpreted )
+[ 7 of 11] Compiling L1semanticaExp   ( L1semanticaExp.hs, interpreted )
+[ 8 of 11] Compiling L1semanticaStm   ( L1semanticaStm.hs, interpreted )
+[ 9 of 11] Compiling L1semanticaProg  ( L1semanticaProg.hs, interpreted )
+[10 of 11] Compiling L1stateGraphs    ( L1stateGraphs.hs, interpreted )
+[11 of 11] Compiling L1tests          ( L1tests.hs, interpreted )
+Ok, 11 modules loaded.
+*L1tests>
+*L1tests> progTOlabelProg p3
+LabProg ("P3",[Var ("x",[0:3])],[Lwhile (1,3) x <= 2 (Lasig (2,3) "x" (x + 1)),Lhalt (3,4)])
+*L1tests>
+*L1tests> :l L1parserStm
+[1 of 5] Compiling HuttonParsing    ( HuttonParsing.hs, interpreted )
+[2 of 5] Compiling L1sintaxis       ( L1sintaxis.hs, interpreted )
+[3 of 5] Compiling L1parserVar      ( L1parserVar.hs, interpreted )
+[4 of 5] Compiling L1parserExpArith ( L1parserExpArith.hs, interpreted )
+[5 of 5] Compiling L1parserStm      ( L1parserStm.hs, interpreted )
+
+L1parserStm.hs:80:23: error:
+    • Expected kind ‘k2 -> *’, but ‘Stm’ has kind ‘*’
+    • In the first argument of ‘Parser’, namely ‘(Stm b)’
+      In the type signature: parserHalt :: Parser (Stm b)
+   |
+80 | parserHalt :: Parser (Stm b)
+   |                       ^^^^^
+
+L1parserStm.hs:90:35: error:
+    • Expected kind ‘* -> *’, but ‘Stm’ has kind ‘*’
+    • In the first argument of ‘Parser’, namely ‘(Stm b)’
+      In the type signature: parserAsig :: Parser b -> Parser (Stm b)
+   |
+90 | parserAsig :: Parser b -> Parser (Stm b)
+   |                                   ^^^^^
+
+L1parserStm.hs:103:23: error:
+    • Expected kind ‘k1 -> *’, but ‘Stm’ has kind ‘*’
+    • In the first argument of ‘Parser’, namely ‘(Stm b)’
+      In the type signature: parserRead :: Parser (Stm b)
+    |
+103 | parserRead :: Parser (Stm b)
+    |                       ^^^^^
+
+L1parserStm.hs:113:24: error:
+    • Expected kind ‘k0 -> *’, but ‘Stm’ has kind ‘*’
+    • In the first argument of ‘Parser’, namely ‘(Stm b)’
+      In the type signature: parserWrite :: Parser (Stm b)
+    |
+113 | parserWrite :: Parser (Stm b)
+    |                        ^^^^^
+
+L1parserStm.hs:125:34: error:
+    • Expected kind ‘* -> *’, but ‘Stm’ has kind ‘*’
+    • In the first argument of ‘Parser’, namely ‘(Stm b)’
+      In the type signature: parserStm :: Parser b -> Parser (Stm b)
+    |
+125 | parserStm :: Parser b -> Parser (Stm b)
+    |                                  ^^^^^
+
+L1parserStm.hs:133:33: error:
+    • Expected kind ‘* -> *’, but ‘Stm’ has kind ‘*’
+    • In the first argument of ‘Parser’, namely ‘(Stm b)’
+      In the type signature: stmToken :: Parser b -> Parser (Stm b)
+    |
+133 | stmToken :: Parser b -> Parser (Stm b)
+    |                                 ^^^^^
+
+L1parserStm.hs:139:38: error:
+    • Expected kind ‘* -> *’, but ‘StmList’ has kind ‘*’
+    • In the first argument of ‘Parser’, namely ‘(StmList b)’
+      In the type signature:
+        parserStmList :: Parser b -> Parser (StmList b)
+    |
+139 | parserStmList :: Parser b -> Parser (StmList b)
+    |                                      ^^^^^^^^^
+
+L1parserStm.hs:148:37: error:
+    • Expected kind ‘* -> *’, but ‘StmList’ has kind ‘*’
+    • In the first argument of ‘Parser’, namely ‘(StmList b)’
+      In the type signature:
+        stmListToken :: Parser b -> Parser (StmList b)
+    |
+148 | stmListToken :: Parser b -> Parser (StmList b)
+    |                                     ^^^^^^^^^
+Failed, four modules loaded.
+*L1parserExpArith>
+*L1parserExpArith> -- cambiando "Stm b" a "Stm" en L1parserStm.hs
+*L1parserExpArith>
+*L1parserExpArith>
+*L1parserExpArith> :l L1parserStm
+[1 of 5] Compiling HuttonParsing    ( HuttonParsing.hs, interpreted )
+[2 of 5] Compiling L1sintaxis       ( L1sintaxis.hs, interpreted )
+[3 of 5] Compiling L1parserVar      ( L1parserVar.hs, interpreted )
+[4 of 5] Compiling L1parserExpArith ( L1parserExpArith.hs, interpreted )
+[5 of 5] Compiling L1parserStm      ( L1parserStm.hs, interpreted )
+
+L1parserStm.hs:139:38: error:
+    • Expected kind ‘* -> *’, but ‘StmList’ has kind ‘*’
+    • In the first argument of ‘Parser’, namely ‘(StmList b)’
+      In the type signature:
+        parserStmList :: Parser b -> Parser (StmList b)
+    |
+139 | parserStmList :: Parser b -> Parser (StmList b)
+    |                                      ^^^^^^^^^
+
+L1parserStm.hs:148:37: error:
+    • Expected kind ‘* -> *’, but ‘StmList’ has kind ‘*’
+    • In the first argument of ‘Parser’, namely ‘(StmList b)’
+      In the type signature:
+        stmListToken :: Parser b -> Parser (StmList b)
+    |
+148 | stmListToken :: Parser b -> Parser (StmList b)
+    |                                     ^^^^^^^^^
+Failed, four modules loaded.
+*L1parserExpArith>
+*L1parserExpArith>
+*L1parserExpArith> -- cambiando "StmList b" a "StmList" en L1parserStm.hs
+*L1parserExpArith>
+*L1parserExpArith>
+*L1parserExpArith>
+*L1parserExpArith> :l L1parserStm
+[1 of 5] Compiling HuttonParsing    ( HuttonParsing.hs, interpreted )
+[2 of 5] Compiling L1sintaxis       ( L1sintaxis.hs, interpreted )
+[3 of 5] Compiling L1parserVar      ( L1parserVar.hs, interpreted )
+[4 of 5] Compiling L1parserExpArith ( L1parserExpArith.hs, interpreted )
+[5 of 5] Compiling L1parserStm      ( L1parserStm.hs, interpreted )
+
+L1parserStm.hs:93:10: error:
+    • Variable not in scope: varToken :: Parser VarId
+    • Perhaps you meant one of these:
+        ‘varIdToken’ (imported from L1parserVar),
+        ‘natToken’ (imported from HuttonParsing)
+   |
+93 |     v <- varToken
+   |          ^^^^^^^^
+
+L1parserStm.hs:95:10: error:
+    Variable not in scope: parserExp :: Parser b -> Parser ExpArith
+   |
+95 |     e <- parserExp parserValores
+   |          ^^^^^^^^^
+
+L1parserStm.hs:107:10: error:
+    • Variable not in scope: varToken :: Parser VarId
+    • Perhaps you meant one of these:
+        ‘varIdToken’ (imported from L1parserVar),
+        ‘natToken’ (imported from HuttonParsing)
+    |
+107 |     v <- varToken
+    |          ^^^^^^^^
+
+L1parserStm.hs:117:10: error:
+    • Variable not in scope: varToken :: Parser VarId
+    • Perhaps you meant one of these:
+        ‘varIdToken’ (imported from L1parserVar),
+        ‘natToken’ (imported from HuttonParsing)
+    |
+117 |     v <- varToken
+    |          ^^^^^^^^
+
+L1parserStm.hs:146:13: error:
+    Variable not in scope: haskelListTOstmList :: [Stm] -> StmList
+    |
+146 |     return (haskelListTOstmList (s:ls))
+    |             ^^^^^^^^^^^^^^^^^^^
+Failed, four modules loaded.
+*L1parserExpArith>
+*L1parserExpArith> -- comentando los errores finales de L1parserStm.hs, dejando solamente parserAsig:
+*L1parserExpArith>
+*L1parserExpArith>
+*L1parserExpArith> :l L1parserStm
+[1 of 5] Compiling HuttonParsing    ( HuttonParsing.hs, interpreted )
+[2 of 5] Compiling L1sintaxis       ( L1sintaxis.hs, interpreted )
+[3 of 5] Compiling L1parserVar      ( L1parserVar.hs, interpreted )
+[4 of 5] Compiling L1parserExpArith ( L1parserExpArith.hs, interpreted )
+[5 of 5] Compiling L1parserStm      ( L1parserStm.hs, interpreted )
+
+L1parserStm.hs:93:10: error:
+    • Variable not in scope: varToken :: Parser VarId
+    • Perhaps you meant one of these:
+        ‘varIdToken’ (imported from L1parserVar),
+        ‘natToken’ (imported from HuttonParsing)
+   |
+93 |     v <- varToken
+   |          ^^^^^^^^
+
+L1parserStm.hs:95:10: error:
+    Variable not in scope: parserExp :: Parser b -> Parser ExpArith
+   |
+95 |     e <- parserExp parserValores
+   |          ^^^^^^^^^
+Failed, four modules loaded.
+*L1parserExpArith>
+*L1parserExpArith> -- Corrigiendo los errores de parserAsig, varToken -> varId,...:
+*L1parserExpArith>
+*L1parserExpArith>
+*L1parserExpArith> :l L1parserStm
+[1 of 5] Compiling HuttonParsing    ( HuttonParsing.hs, interpreted )
+[2 of 5] Compiling L1sintaxis       ( L1sintaxis.hs, interpreted )
+[3 of 5] Compiling L1parserVar      ( L1parserVar.hs, interpreted )
+[4 of 5] Compiling L1parserExpArith ( L1parserExpArith.hs, interpreted )
+[5 of 5] Compiling L1parserStm      ( L1parserStm.hs, interpreted )
+
+L1parserStm.hs:2:7: error: Not in scope: ‘stmListToken’
+  |
+2 |     ( stmListToken
+  |       ^^^^^^^^^^^^
+
+L1parserStm.hs:3:7: error: Not in scope: ‘stmToken’
+  |
+3 |     , stmToken
+  |       ^^^^^^^^
+
+L1parserStm.hs:5:7: error: Not in scope: ‘parserStmList’
+  |
+5 |     , parserStmList
+  |       ^^^^^^^^^^^^^
+
+L1parserStm.hs:6:7: error: Not in scope: ‘parserStm’
+  |
+6 |     , parserStm
+  |       ^^^^^^^^^
+
+L1parserStm.hs:9:7: error: Not in scope: ‘parserRead’
+  |
+9 |     , parserRead
+  |       ^^^^^^^^^^
+
+L1parserStm.hs:10:7: error: Not in scope: ‘parserWrite’
+   |
+10 |     , parserWrite
+   |       ^^^^^^^^^^^
+Failed, four modules loaded.
+*L1parserExpArith>
+*L1parserExpArith>
+*L1parserExpArith>
+*L1parserExpArith>
+*L1parserExpArith> -- comentando en exportacion, al inicio de L1parserStm.hs, lo que no esta definido:
+*L1parserExpArith>
+*L1parserExpArith>
+Prelude> :l L1parserStm
+[1 of 5] Compiling HuttonParsing    ( HuttonParsing.hs, interpreted )
+[2 of 5] Compiling L1sintaxis       ( L1sintaxis.hs, interpreted )
+[3 of 5] Compiling L1parserVar      ( L1parserVar.hs, interpreted )
+[4 of 5] Compiling L1parserExpArith ( L1parserExpArith.hs, interpreted )
+[5 of 5] Compiling L1parserStm      ( L1parserStm.hs, interpreted )
+Ok, five modules loaded.
+*L1parserStm>
+*L1parserStm> -- probando el parser para la isntruccion de aignacion:
+*L1parserStm>
+*L1parserStm> parse parserAsig "x := 3"
+
+<interactive>:43:7: error:
+    • Couldn't match expected type ‘Parser a’
+                  with actual type ‘Parser b0 -> Parser Stm’
+    • Probable cause: ‘parserAsig’ is applied to too few arguments
+      In the first argument of ‘parse’, namely ‘parserAsig’
+      In the expression: parse parserAsig "x := 3"
+      In an equation for ‘it’: it = parse parserAsig "x := 3"
+    • Relevant bindings include
+        it :: [(a, String)] (bound at <interactive>:43:1)
+*L1parserStm>
+*L1parserStm> -- quitando el parametro b de los parsers, cambiando " b" a "".
+*L1parserStm>
+*L1parserStm> :l L1parserStm
+[1 of 5] Compiling HuttonParsing    ( HuttonParsing.hs, interpreted )
+[2 of 5] Compiling L1sintaxis       ( L1sintaxis.hs, interpreted )
+[3 of 5] Compiling L1parserVar      ( L1parserVar.hs, interpreted )
+[4 of 5] Compiling L1parserExpArith ( L1parserExpArith.hs, interpreted )
+[5 of 5] Compiling L1parserStm      ( L1parserStm.hs, interpreted )
+Ok, five modules loaded.
+*L1parserStm>
+*L1parserStm> -- probando el parser para la isntruccion de aignacion:
+*L1parserStm> :t parse
+parse :: Parser a -> String -> [(a, String)]
+*L1parserStm> parse parserAsig "x := 3"
+
+<interactive>:55:7: error:
+    • Couldn't match expected type ‘Parser a’
+                  with actual type ‘Parser b0 -> Parser Stm’
+    • Probable cause: ‘parserAsig’ is applied to too few arguments
+      In the first argument of ‘parse’, namely ‘parserAsig’
+      In the expression: parse parserAsig "x := 3"
+      In an equation for ‘it’: it = parse parserAsig "x := 3"
+    • Relevant bindings include
+        it :: [(a, String)] (bound at <interactive>:55:1)
+*L1parserStm>
+*L1parserStm> :t parserAsig
+parserAsig :: Parser b -> Parser Stm
+*L1parserStm>
+*L1parserStm> -- quitando el parametro parserValores de todos los parsers en L1parserStm, replace " parserValores" --> ""
+*L1parserStm>
+*L1parserStm> -- y comentando el tipo (signature) de parserAsig para que Haskell lo deduzca:
+*L1parserStm>
+*L1parserStm> :l L1parserStm
+[1 of 5] Compiling HuttonParsing    ( HuttonParsing.hs, interpreted )
+[2 of 5] Compiling L1sintaxis       ( L1sintaxis.hs, interpreted )
+[3 of 5] Compiling L1parserVar      ( L1parserVar.hs, interpreted )
+[4 of 5] Compiling L1parserExpArith ( L1parserExpArith.hs, interpreted )
+[5 of 5] Compiling L1parserStm      ( L1parserStm.hs, interpreted )
+Ok, five modules loaded.
+*L1parserStm>
+*L1parserStm> -- probando el parser para la isntruccion de aignacion:
+*L1parserStm> parse parserAsig "x := 3"
+[(x:=3,"")]
+*L1parserStm> -- OK, resultado esperado.
+*L1parserStm>
+*L1parserStm>
+----------------------------------------------
+L1parserStm>
+*L1parserStm> -- Encender todos los warnings, para revisar lo que sobra o falta:
+*L1parserStm> :set -Wall
+*L1parserStm>
+*L1parserStm> -- Compilando otra vez:
+*L1parserStm>
+*L1parserStm> :l L1parserStm
+[1 of 5] Compiling HuttonParsing    ( HuttonParsing.hs, interpreted )
+[2 of 5] Compiling L1sintaxis       ( L1sintaxis.hs, interpreted )
+[3 of 5] Compiling L1parserVar      ( L1parserVar.hs, interpreted )
+[4 of 5] Compiling L1parserExpArith ( L1parserExpArith.hs, interpreted )
+[5 of 5] Compiling L1parserStm      ( L1parserStm.hs, interpreted )
+
+L1parserStm.hs:77:1: warning: [-Wunused-top-binds]
+    Defined but not used: ‘haltToken’
+   |
+77 | haltToken = string "Halt"
+   | ^^^^^^^^^
+
+L1parserStm.hs:80:1: warning: [-Wunused-top-binds]
+    Defined but not used: ‘parserHalt’
+   |
+80 | parserHalt =
+   | ^^^^^^^^^^
+
+L1parserStm.hs:94:1: warning: [-Wmissing-signatures]
+    Top-level binding with no type signature: parserAsig :: Parser Stm
+   |
+94 | parserAsig=
+   | ^^^^^^^^^^
+Ok, five modules loaded.
+*L1parserStm>
+*L1parserStm> -- poniendo el tipo a parserAsig, y exportando parserHalt:
+*L1parserStm>
+*L1parserStm> :l L1parserStm
+[1 of 5] Compiling HuttonParsing    ( HuttonParsing.hs, interpreted )
+[2 of 5] Compiling L1sintaxis       ( L1sintaxis.hs, interpreted )
+[3 of 5] Compiling L1parserVar      ( L1parserVar.hs, interpreted )
+[4 of 5] Compiling L1parserExpArith ( L1parserExpArith.hs, interpreted )
+[5 of 5] Compiling L1parserStm      ( L1parserStm.hs, interpreted )
+Ok, five modules loaded.
+*L1parserStm> -- OK compilacion perfecta, sin warnings.
+*L1parserStm>
+*L1parserStm> -- probando otra vez los parsers ya definidos y exportados (parserAsig y parserHalt):
+*L1parserStm>
+*L1parserStm> parse parserAsig "x := 3"
+[(x:=3,"")]
+*L1parserStm> -- OK.
+*L1parserStm>
+*L1parserStm> parse parserHalt "Halt"
+[(Halt,"")]
+*L1parserStm> -- OK.
+*L1parserStm>
+--------------------------------------------
+
+L1parserStm>
+*L1parserStm> -- descomentando parte de parserStm y stmToken:
+*L1parserStm>
+*L1parserStm> -- descomentando parte de parserStm y stmToken, y exportando estas funciones:
+*L1parserStm> -- y quitando, en L1parserStm, "Parser b" (parser para valores de L0) de la definición de parserStm y stmToken:
+*L1parserStm>
+*L1parserStm> :l L1parserStm.hs
+[1 of 5] Compiling HuttonParsing    ( HuttonParsing.hs, interpreted )
+[2 of 5] Compiling L1sintaxis       ( L1sintaxis.hs, interpreted )
+[3 of 5] Compiling L1parserVar      ( L1parserVar.hs, interpreted )
+[4 of 5] Compiling L1parserExpArith ( L1parserExpArith.hs, interpreted )
+[5 of 5] Compiling L1parserStm      ( L1parserStm.hs, interpreted )
+Ok, five modules loaded.
+*L1parserStm>
+*L1parserStm>
+*L1parserStm>
+*L1parserStm> -- probando el parser instrucciones:
+*L1parserStm>
+*L1parserStm> parse parserStm "Halt"
+[(Halt,"")]
+*L1parserStm> -- OK
+*L1parserStm> parse parserStm "x := 3"
+[(x:=3,"")]
+*L1parserStm> -- OK
+--------------------------------------------
