@@ -1,0 +1,12 @@
+L2PROG PSuma
+VAR
+    x: [0..3];
+    y: [0..3];
+    z: [0..3];
+PROG
+    {x1:=3;
+    z1:=0;
+    For y1 = 0 To x1 Do
+        z1:=(z1 + y1);
+    Halt;
+    }
