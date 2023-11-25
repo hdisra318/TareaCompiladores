@@ -57,36 +57,79 @@ semIfThen expBool stm1 stm2 sigma
          else (semStm stm2 sigma)
 --
 
+-- Version anterior de While 
+-- semWhile :: ExpBool -> Stm -> EstadoVT -> [EstadoVT]
+-- semWhile expBool stm sigma
+--     = if ebSem
+--          then nub $ concat [semWhile expBool stm edo | edo <- sigmaL']
+--          else [sigma]
+--     where
+--         ebSem   = semExpBool expBool sigma
+--         --semStmSigma = semStm stm sigma
+--         --xL  = semStmSigma
+--         sigmaL' = semStm stm sigma
 --
+
+-- Version anterior basada en While
+-- semFor :: VarId -> ExpArith -> ExpArith -> Stm -> EstadoVT -> [EstadoVT]
+-- semFor vId e1 e2 stm sigma
+--     = if ebSem
+--         then nub $ concat [semFor vId e1 e2 stm edo | edo <- sigmaL']
+--         else [sigma]
+--     where
+--         ebSem = semExpBool (EBatom (AtomoBool (EBvar vId, OCmenEq, obtenerExpBasica e2))) sigma
+--         sigmaL' = semStm stm sigma
+
+
+-- obtenerExpBasica :: ExpArith -> ExpBasica
+-- obtenerExpBasica (EAbasica expBasica) = expBasica
+-- obtenerExpBasica (EAopArit _) = error "No es una ExpBasica"
+
+
+-- Nuevo While para ayudar a la ejecucion de For
 semWhile :: ExpBool -> Stm -> EstadoVT -> [EstadoVT]
-semWhile expBool stm sigma
-    = if ebSem
-         then nub $ concat [semWhile expBool stm edo | edo <- sigmaL']
-         else [sigma]
+semWhile expBool stmW sigma =
+    case ebSem of
+        True    -> if null semStmWmenosSigma
+                      then [sigma]
+                      else semRecWhile
+        False   -> [sigma]
     where
-        ebSem   = semExpBool expBool sigma
-        --semStmSigma = semStm stm sigma
-        --xL  = semStmSigma
-        sigmaL' = semStm stm sigma
---
+        ebSem           = semExpBool expBool sigma
+        semStmW         = semStm stmW sigma
+        semStmWmenosSigma = delete sigma semStmW
+        semRecWhile = nub $ concat
+                        [semWhile expBool stmW edo |
+                            edo <- semStmWmenosSigma]
 
--- FOR
+----------------------------------------
+-- Implementacion de For usando While --
+----------------------------------------
+
+-- Usamos semanticas ya implementadas para transformar los parametros dados
+-- para un for en la semantica de un block y la de un while, asignando el
+-- valor ea1 para el vId y empezar la iteracion hasta ea2, sumando en uno a vId
+-- y ejecutando stm
 semFor :: VarId -> ExpArith -> ExpArith -> Stm -> EstadoVT -> [EstadoVT]
-semFor vId e1 e2 stm sigma
-    = if ebSem
-        then nub $ concat [semFor vId e1 e2 stm edo | edo <- sigmaL']
-        else [sigma]
+semFor vId ea1 ea2 stmF sigma -- Semantica de "For vid=ea1 To ea2 Do stmF"
+    = semStm forTOwhile sigma
     where
-        ebSem = semExpBool (EBatom (AtomoBool (EBvar vId, OCmenEq, obtenerExpBasica e2))) sigma
-        -- aux1 = semExpArith e2
-        -- aux2 = semVar vId sigma
-        -- ebSem = aux1 == aux2
-        sigmaL' = semStm stm sigma
+    forTOwhile =
+        SblockStm                       -- {
+            [Sasig vId ea1,             -- v := ea1;
+            SWhile vLEQea2              -- While v <= ea2 Do
+                (SblockStm              --      {
+                    [stmF,              --      stm;
+                    Sasig vId vSumUno   --      v := v+1;
+                ])                      --      }
+                ]                       -- }
+    vLEQea2 = EBatom (AtomoBool (EBvar vId, OCmenEq, EBint ea2Sem)) -- v <= ea2
+    ea2Sem  = semExpArith ea2 sigma -- semantica de ea2 EN sigma XXX
+    vIdEA   = EAbasica (EBvar vId)  -- vId como una ExpArith VER ExpArith
+    unoEA   = EAbasica (EBint 1)    -- 1 como una ExpArith VER ExpArith
+    vSumUno = EAopArit (vIdEA,OAsum,unoEA) -- v+1
 
 
-obtenerExpBasica :: ExpArith -> ExpBasica
-obtenerExpBasica (EAbasica expBasica) = expBasica
-obtenerExpBasica (EAopArit _) = error "No es una ExpBasica"
 ------
 -- semAtomoBool (AtomoBool (e2, OCequ, (semVar vId sigma))) sigma
 
