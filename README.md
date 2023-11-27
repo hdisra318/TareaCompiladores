@@ -8,6 +8,13 @@ Tarea 1 de Compiladores
 - Israel Hernandez Dorantes
 - Kevin Jair Torres Valencia
 
+## Instrucciones
+
+- Iniciar `ghci`.
+- Cargar el archivo `L2tests.hs` con el comando `:l L2tests.hs`.
+- Ejecutar la función `testfor` sin argumentos para ver un ejemplo del for.
+- Ejecutar la función `testArchivo` sin argumentos para leer el archivo `progSuma.L2`.
+
 ## Ejercicios:
 1. Definir un lenguaje, L2, que resulta de agregar a L1 una instrucción "For".
 En L2, la sintaxis cambia a:
